@@ -5,7 +5,7 @@ import Navbar from "../navbar";
 
 function ViewProduct() {
   const { id } = useParams();
-  const [product, setProduct] = useState(null); // start as null
+  const [product, setProduct] = useState(null); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

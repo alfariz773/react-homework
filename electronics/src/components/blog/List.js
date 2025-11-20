@@ -12,7 +12,7 @@ function ListProducts() {
   function fetchProducts() {
     axios.get("https://worksheet-catalogue.mashupstack.com/products")
       .then(response => {
-        console.log("API response:", response.data); // ✅ check structure
+        console.log("API response:", response.data); 
         setProducts(response.data);
         setFiltered(response.data);
       })

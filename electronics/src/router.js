@@ -6,12 +6,12 @@ import ViewProduct from "./components/blog/View";
 import EditProduct from "./components/blog/Edit";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },                       // wrapper
-  { path: "/products", element: <ListProducts /> },      // list page
-  { path: "/products/create", element: <CreateProduct /> }, // add product
-  { path: "/products/view/:id", element: <ViewProduct /> }, // view product
-  { path: "/products/edit/:id", element: <EditProduct /> }, // edit product
-  { path: "*", element: <h2>Page Not Found</h2> }        // catch-all
+  { path: "/", element: <App /> },                      
+  { path: "/products", element: <ListProducts /> },      
+  { path: "/products/create", element: <CreateProduct /> },
+  { path: "/products/view/:id", element: <ViewProduct /> }, 
+  { path: "/products/edit/:id", element: <EditProduct /> }, 
+         
 ]);
 
 export default router;
