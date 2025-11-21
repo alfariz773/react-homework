@@ -44,16 +44,7 @@ function Navbar() {
                     Home
                 </NavLink>
                 </li>
-                <li className="nav-item">
-                <NavLink to={"/crud"} className="nav-link">
-                     Crud
-                </NavLink>
-                </li>
-                <li className="nav-item">
-                <NavLink to={"/blog/posts"} className={ 'nav-link '+(status => status.isActive ? 'active' : '')}>
-                    blog
-                </NavLink>
-                </li>
+                
                 <li className="nav-item">
                     <NavLink 
                     to={"/register"} 

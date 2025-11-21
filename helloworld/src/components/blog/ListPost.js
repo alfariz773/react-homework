@@ -2,36 +2,70 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../navbar";
-import PostListItem from "./PostListItem";
+import ProductListItem from "./productListItem";
 
-function ListPosts() {
-    var [posts, setPosts]=useState([]);
-    function fetchPosts(){
-        axios.get('https://demo-blog.mashupstack.com/api/posts').then(response=>{
-            setPosts(response.data)
-        })
+function ListProducts() {
+  const [products, setProducts] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
+  function fetchProducts() {
+    axios.get("https://worksheet-catalogue.mashupstack.com/products")
+      .then(response => {
+        console.log("API response:", response.data); 
+        setProducts(response.data);
+        setFiltered(response.data);
+      })
+      .catch(err => console.error(err));
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  function handleSearch() {
+    if (searchTerm.trim() === "") {
+      setFiltered(products);
+    } else {
+      const result = products.filter(p =>
+        p?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFiltered(result);
     }
-    useEffect(()=>{
-        fetchPosts()
-    },[])
+  }
 
-    return (<div>
-        <Navbar></Navbar>
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <h1 className="text-center my-4">Blog</h1>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-8 offset-2">
-                    <Link to="/blog/posts/create" className="btn btn-info mb-2">Create Post</Link>
-                    {posts.map(post =><PostListItem key={post.id} post={post} refresh={fetchPosts}/>)}
-                </div>
-            </div>
-        </div>
-    </div>)
+  return (
+    <div>
+      <Navbar />
+      <div className="container mt-4">
+        <h2>Product Catalog</h2>
+
+        <input
+          type="text"
+          placeholder="Search product name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        /> &nbsp;
+        <button className="btn btn-success" onClick={handleSearch}>Search</button>
+
+        <br /><br />
+
+        <Link to="/products/create" className="btn btn-primary mb-3">Add Product</Link>
+
+        {Array.isArray(filtered) && filtered.length > 0 ? (
+          filtered.map(product => (
+            <ProductListItem
+              key={product.id}
+              product={product}
+              refresh={fetchProducts}
+            />
+          ))
+        ) : (
+          <p>No matching products found.</p>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default ListPosts;
+export default ListProducts;
